@@ -70,7 +70,7 @@ resource "aws_instance" "worker_instance" {
   }
 
   provisioner "remote-exec" {
-    script = "${path.module}/kube.sh"
+    script = "${path.module}/worker_kube.sh"
     connection {
       type = "ssh"
       user = "centos"

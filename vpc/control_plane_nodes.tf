@@ -86,5 +86,15 @@ resource "aws_instance" "control_plane_instance" {
       private_key = file(var.private_key_file)
     }
   }
+
+  provisioner "remote-exec" {
+    script = "${path.module}/control_plane_kube.sh"
+    connection {
+      type = "ssh"
+      user = "centos"
+      host = self.public_ip
+      private_key = file(var.private_key_file)
+    }
+  }
 }
 

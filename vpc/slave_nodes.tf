@@ -88,10 +88,17 @@ resource "aws_security_group" "slaves_sec_group" {
     cidr_blocks = var.all_cidr_block
   }
 
-  ingress {
-    from_port = 80
+  ingress {#For Kube-API Server
+    from_port = 10250
     protocol = "tcp"
-    to_port = 80
+    to_port = 10250
+    cidr_blocks = var.all_cidr_block #TODO Allow Self and Control plane nodes.
+  }
+
+  ingress {#Node Port Services
+    from_port = 30000
+    protocol = "tcp"
+    to_port = 32767
     cidr_blocks = var.all_cidr_block
   }
 
@@ -123,6 +130,16 @@ resource "aws_instance" "node_instance" {
 
   provisioner "remote-exec" {
     script = "${path.module}/slave_nodes_setup.sh"
+    connection {
+      type = "ssh"
+      user = "centos"
+      host = self.public_ip
+      private_key = file(var.private_key_file)
+    }
+  }
+
+  provisioner "remote-exec" {
+    script = "${path.module}/kube.sh"
     connection {
       type = "ssh"
       user = "centos"

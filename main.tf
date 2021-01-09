@@ -13,9 +13,7 @@ module "vpc" {
   allowed_availability_zones              = var.allowed_availability_zones
   amis                                    = "ami-000e7ce4dd68e7a11" //Centos 8
   slave_count                             = 1
+  control_plane_count                     = 1
   key_name                                = "short_id_key_pair_2"
   private_key_file                        = pathexpand("~/short_id_key_pair_2.pem")
 }
-
-#On each node, install container runtime
-#

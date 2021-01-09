@@ -6,6 +6,7 @@ variable "allowed_availability_zones" {}
 variable "amis" {}
 variable "key_name" {}
 variable "slave_count" {}
+variable "control_plane_count" {}
 variable "private_key_file" {}
 
 output "cluster_vpc_id" {

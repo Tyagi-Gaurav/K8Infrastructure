@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# Install KubeAdM and Kubelet
+
 cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
 [kubernetes]
 name=Kubernetes
@@ -18,3 +20,6 @@ sudo sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
 sudo yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
 
 sudo systemctl enable --now kubelet
+
+#Initialise Kubeadm
+sudo kubeadm config images pull

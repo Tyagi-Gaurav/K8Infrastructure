@@ -121,14 +121,14 @@ resource "aws_instance" "node_instance" {
     Environment = "Dev"
   }
 
-//  provisioner "remote-exec" {
-//    script = "${path.module}/setup_zookeeper.sh"
-//    connection {
-//      type = "ssh"
-//      user = "ec2-user"
-//      host = self.public_ip
-//      private_key = file(var.private_key_file)
-//    }
-//  }
+  provisioner "remote-exec" {
+    script = "${path.module}/slave_nodes_setup.sh"
+    connection {
+      type = "ssh"
+      user = "centos"
+      host = self.public_ip
+      private_key = file(var.private_key_file)
+    }
+  }
 }
 

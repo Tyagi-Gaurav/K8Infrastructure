@@ -6,11 +6,10 @@ variable "allowed_availability_zones" {}
 variable "amis" {}
 variable "key_name" {}
 variable "slave_count" {}
+variable "private_key_file" {}
 
 output "cluster_vpc_id" {
   value = aws_vpc.cluster_id_vpc.id
 }
 
-//output "gen_subnet_ids" {
-//  value = aws_subnet.short_id_subnet_public_subnet.*.id
-//}
+//TODO Output EC2 instances IP/domain name.

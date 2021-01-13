@@ -69,12 +69,23 @@ resource "aws_instance" "control_plane_instance" {
   associate_public_ip_address = true
 
   security_groups = [aws_security_group.control_plane_sec_group.id]
-  subnet_id = element(aws_subnet.slave_nodes_subnet_public_subnet.*.id, 0) //Single AZ for now.
+  subnet_id = element(aws_subnet.control_plane_nodes_subnet_public_subnet.*.id, 0) //Single AZ for now.
   iam_instance_profile = aws_iam_instance_profile.node_instance_profile.name
   key_name = var.key_name
 
   tags = {
     Application = "K8 Control Plane Node"
+  }
+
+  provisioner "file" {
+    source      = "${path.module}/kubeadm.yml"
+    destination = "/tmp/kubeadm.yml"
+    connection {
+      type = "ssh"
+      user = "centos"
+      host = self.public_ip
+      private_key = file(var.private_key_file)
+    }
   }
 
   provisioner "remote-exec" {

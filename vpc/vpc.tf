@@ -35,13 +35,22 @@ And has a single route table.
 
 Below creates a subnet for each availability zone.
 */
-resource "aws_subnet" "slave_nodes_subnet_public_subnet" {
+resource "aws_subnet" "worker_nodes_subnet_public_subnet" {
   //count = length(var.allowed_availability_zones)
   vpc_id = aws_vpc.cluster_id_vpc.id
-  cidr_block = element(values(var.cluster_cidr_block_by_availability_zone), 0) //Single AZ for now.
+  cidr_block = element(values(var.worker_cluster_cidr_block_by_availability_zone), 0) //Single AZ for now.
   map_public_ip_on_launch = true
   depends_on = [aws_internet_gateway.cluster_id_gw]
-  availability_zone = element(keys(var.cluster_cidr_block_by_availability_zone), 0) //Single AZ for now.
+  availability_zone = element(keys(var.worker_cluster_cidr_block_by_availability_zone), 0) //Single AZ for now.
+}
+
+resource "aws_subnet" "control_plane_nodes_subnet_public_subnet" {
+  //count = length(var.allowed_availability_zones)
+  vpc_id = aws_vpc.cluster_id_vpc.id
+  cidr_block = element(values(var.control_plane_cluster_cidr_block_by_availability_zone), 0) //Single AZ for now.
+  map_public_ip_on_launch = true
+  depends_on = [aws_internet_gateway.cluster_id_gw]
+  availability_zone = element(keys(var.control_plane_cluster_cidr_block_by_availability_zone), 0) //Single AZ for now.
 }
 
 //Add all addresses access to internet gateway
@@ -55,10 +64,10 @@ resource "aws_route_table" "cluster_id_routing" {
 }
 
 //Allow all public subnet instances access to internet
-resource "aws_route_table_association" "cluster_routing_association" {
+resource "aws_route_table_association" "control_plane_cluster_routing_association" {
   count = length(var.allowed_availability_zones)
   route_table_id = aws_route_table.cluster_id_routing.id
-  subnet_id = element(aws_subnet.slave_nodes_subnet_public_subnet.*.id, count.index)
+  subnet_id = element(aws_subnet.control_plane_nodes_subnet_public_subnet.*.id, count.index)
 }
 
 resource "aws_iam_role" "node_iam_role" {

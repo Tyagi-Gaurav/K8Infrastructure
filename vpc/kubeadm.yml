@@ -1,0 +1,38 @@
+apiVersion: kubeadm.k8s.io/v1beta2
+kind: InitConfiguration
+nodeRegistration:
+  criSocket: /var/run/crio/crio.sock
+  taints:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+  kubeletExtraArgs:
+    cgroup-driver: "systemd"
+
+
+#bootstrapTokens:
+#  - groups:
+#      - system:bootstrappers:kubeadm:default-node-token
+#    token: abcdef.0123456789abcdef
+#    ttl: 24h0m0s
+#    usages:
+#      - signing
+#      - authentication
+#kind: InitConfiguration
+#localAPIEndpoint:
+#  advertiseAddress: 1.2.3.4
+#  bindPort: 6443
+#nodeRegistration:
+#  criSocket: /var/run/dockershim.sock
+#  name: ip-172-31-1-127.us-east-2.compute.internal
+#  taints:
+#    - effect: NoSchedule
+#      key: node-role.kubernetes.io/master
+#---
+#apiServer:
+#  timeoutForControlPlane: 4m0s
+#apiVersion: kubeadm.k8s.io/v1beta2
+#kind: ClusterConfiguration
+#networking:
+#  dnsDomain: cluster.local
+#  serviceSubnet: 10.96.0.0/12
+#scheduler: {}

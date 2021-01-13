@@ -1,6 +1,7 @@
 variable "cluster_cidrs" {}
 variable "all_cidr_block" {}
-variable "cluster_cidr_block_by_availability_zone" {}
+variable "worker_cluster_cidr_block_by_availability_zone" {}
+variable "control_plane_cluster_cidr_block_by_availability_zone" {}
 variable "allowed_availability_zones" {}
 
 variable "amis" {}
@@ -12,5 +13,9 @@ variable "private_key_file" {}
 output "cluster_vpc_id" {
   value = aws_vpc.cluster_id_vpc.id
 }
+
+//output "control_plane_instance_ec2_name" {
+//  value = aws_instance.control_plane_instance.public_dns
+//}
 
 //TODO Output EC2 instances IP/domain name.

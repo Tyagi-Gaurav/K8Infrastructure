@@ -22,12 +22,21 @@ variable "amis" {
   }
 }
 
-variable "cluster_cidr_block_by_availability_zone" {
+variable "control_plane_cluster_cidr_block_by_availability_zone" {
   type = map(string)
   default = {
     us-east-2a = "172.31.1.0/24"
     us-east-2b = "172.31.2.0/24"
     us-east-2c = "172.31.3.0/24"
+  }
+}
+
+variable "worker_cluster_cidr_block_by_availability_zone" {
+  type = map(string)
+  default = {
+    us-east-2a = "172.31.4.0/24"
+    us-east-2b = "172.31.5.0/24"
+    us-east-2c = "172.31.6.0/24"
   }
 }
 

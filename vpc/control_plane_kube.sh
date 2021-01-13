@@ -12,5 +12,5 @@ sudo kubeadm config images pull
 sudo systemctl daemon-reload
 sudo systemctl restart kubelet
 
-
-#sudo kubeadm init --pod-network-cidr=$CIDR
+#--pod-network-cidr=$CIDR
+sudo kubeadm init --config /tmp/kubeadm.yml

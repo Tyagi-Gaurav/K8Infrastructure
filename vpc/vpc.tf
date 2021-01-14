@@ -70,6 +70,13 @@ resource "aws_route_table_association" "control_plane_cluster_routing_associatio
   subnet_id = element(aws_subnet.control_plane_nodes_subnet_public_subnet.*.id, count.index)
 }
 
+//Allow all public subnet instances access to internet
+resource "aws_route_table_association" "worker_cluster_routing_association" {
+  count = length(var.allowed_availability_zones)
+  route_table_id = aws_route_table.cluster_id_routing.id
+  subnet_id = element(aws_subnet.worker_nodes_subnet_public_subnet.*.id, count.index)
+}
+
 resource "aws_iam_role" "node_iam_role" {
   name = "node_iam_role"
 

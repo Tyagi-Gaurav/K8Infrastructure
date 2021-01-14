@@ -78,8 +78,8 @@ resource "aws_instance" "control_plane_instance" {
   }
 
   provisioner "file" {
-    source      = "${path.module}/kubeadm.yml"
-    destination = "/tmp/kubeadm.yml"
+    source      = "${path.module}/kubeadm_init.yml"
+    destination = "/tmp/kubeadm_init.yml"
     connection {
       type = "ssh"
       user = "centos"
@@ -87,6 +87,17 @@ resource "aws_instance" "control_plane_instance" {
       private_key = file(var.private_key_file)
     }
   }
+
+//  provisioner "file" {
+//    source      = "${path.module}/podsubnet_init.yml"
+//    destination = "/tmp/podsubnet_init.yml"
+//    connection {
+//      type = "ssh"
+//      user = "centos"
+//      host = self.public_ip
+//      private_key = file(var.private_key_file)
+//    }
+//  }
 
   provisioner "remote-exec" {
     script = "${path.module}/base_nodes_setup.sh"

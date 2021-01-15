@@ -63,7 +63,6 @@ resource "aws_security_group" "control_plane_sec_group" {
 }
 
 resource "aws_instance" "control_plane_instance" {
-  count = var.control_plane_count
   ami = var.amis
   instance_type = "t2.large"
   associate_public_ip_address = true
@@ -87,17 +86,6 @@ resource "aws_instance" "control_plane_instance" {
       private_key = file(var.private_key_file)
     }
   }
-
-//  provisioner "file" {
-//    source      = "${path.module}/podsubnet_init.yml"
-//    destination = "/tmp/podsubnet_init.yml"
-//    connection {
-//      type = "ssh"
-//      user = "centos"
-//      host = self.public_ip
-//      private_key = file(var.private_key_file)
-//    }
-//  }
 
   provisioner "remote-exec" {
     script = "${path.module}/base_nodes_setup.sh"

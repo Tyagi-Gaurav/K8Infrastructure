@@ -29,4 +29,8 @@ Once you have found the failing container, you can inspect its logs with:
 - ~~Control plane should be on a different subnet than worker node.~~
 - ~~On Control plane, export KUBECONFIG=/etc/kubernetes/admin.conf~~~~
 - ~~Don't start adding nodes to network until Control plane node is ready.~~
-- Get token from Control plane to add nodes to the network.
+- Download kube/config from Control plane and save it in Home directory.
+- Automate get token from Control plane to add nodes to the network.
+- Role of node added to control plane is <empty>
+- Schedule pods on the node (Manually)
+    - Deploy an application with 2 application pods on the server.

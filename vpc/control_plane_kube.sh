@@ -21,6 +21,3 @@ sudo cp /etc/kubernetes/admin.conf ~/.kube/
 sudo mv ~/.kube/admin.conf ~/.kube/config
 sudo chmod 666 ~/.kube/config
 sudo service kubelet restart
-
-#Create Pod Network
-#kubectl apply -f /tmp/podsubnet_init.yml

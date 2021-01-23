@@ -9,7 +9,6 @@ sudo systemctl enable --now kubelet
 #Initialise Kubeadm
 sudo kubeadm config images pull
 
-#Pass parameters for kubeadm to connect to a container runtime (CRI-O)
 sudo systemctl daemon-reload
 sudo systemctl restart kubelet
 

@@ -6,17 +6,44 @@ import (
     "k8s.io/apimachinery/pkg/apis/meta/v1"
     "k8s.io/client-go/kubernetes"
     "k8s.io/client-go/tools/clientcmd"
+    "os"
 )
 
 func main() {
+    var option = ""
+    if len(os.Args) > 1 {
+        option = os.Args[1]
+    }
+
     // uses the current context in kubeconfig
     fmt.Println("Build Client Config")
     config, _ := clientcmd.BuildConfigFromFlags("", "/Users/gauravt/.kube/config")
     // creates the clientset
     fmt.Println("Create Client Set")
-    clientset, _ := kubernetes.NewForConfig(config)
+    clientSet, _ := kubernetes.NewForConfig(config)
+
+    switch option {
+        case "nodes" : getNodes(clientSet)
+        case "pods" : getPods(clientSet)
+        default:
+            fmt.Println("Nothing to do")
+    }
+}
+
+func getNodes(clientSet *kubernetes.Clientset) {
+    ni := clientSet.CoreV1().Nodes()
+    nodes, err := ni.List(context.TODO(), v1.ListOptions{})
+
+    if err != nil {
+        fmt.Println("Error occurred: ", err)
+    }
+
+    fmt.Printf("There are %d nodes in the cluster\n", len(nodes.Items))
+
+}
+
+func getPods(clientSet *kubernetes.Clientset) {
     // access the API to list pods
-    fmt.Println("Get Pods")
-    pods, _ := clientset.CoreV1().Pods("").List(context.TODO(), v1.ListOptions{})
+    pods, _ := clientSet.CoreV1().Pods("").List(context.TODO(), v1.ListOptions{})
     fmt.Printf("There are %d pods in the cluster\n", len(pods.Items))
 }

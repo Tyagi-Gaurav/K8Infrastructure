@@ -21,6 +21,12 @@ Apply pod Network on Control Plane
 Check Control plane and DNS information
 - ```kubectl cluster-info```
 
+Check certificate expiration
+- ```sudo kubeadm certs check-expiration```
+
+See configMap for various K8 components
+- ```kubectl get configMap -n kube-system```
+
 Here is one example how you may list all Kubernetes containers running in cri-o/containerd using crictl:
 - ```'crictl --runtime-endpoint /var/run/crio/crio.sock ps -a | grep kube | grep -v pause```
 Once you have found the failing container, you can inspect its logs with:
@@ -29,8 +35,13 @@ Once you have found the failing container, you can inspect its logs with:
 - ~~Control plane should be on a different subnet than worker node.~~
 - ~~On Control plane, export KUBECONFIG=/etc/kubernetes/admin.conf~~~~
 - ~~Don't start adding nodes to network until Control plane node is ready.~~
-- Download kube/config from Control plane and save it in Home directory.
-- Automate get token from Control plane to add nodes to the network.
+- ~~Download kube/config from Control plane and save it in Home directory.~~
 - Role of node added to control plane is <empty>
 - Schedule pods on the node (Manually)
+    - Schedule a single redis pod on node. 
     - Deploy an application with 2 application pods on the server.
+    
+- Automate 
+    - Get token from Control plane to add nodes to the network.
+    - Get available nodes on the network
+    - Get pods deployed on the network    

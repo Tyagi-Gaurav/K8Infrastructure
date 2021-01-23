@@ -17,7 +17,7 @@ resource "aws_vpc" "cluster_id_vpc" {
   enable_dns_hostnames = true
 
   tags = {
-    name = "VPC for Cluster that holds all the nodes."
+    description = "VPC for Cluster that holds all the nodes."
   }
 }
 

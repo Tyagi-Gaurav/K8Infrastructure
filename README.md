@@ -36,9 +36,11 @@ Once you have found the failing container, you can inspect its logs with:
 - ~~On Control plane, export KUBECONFIG=/etc/kubernetes/admin.conf~~~~
 - ~~Don't start adding nodes to network until Control plane node is ready.~~
 - ~~Download kube/config from Control plane and save it in Home directory.~~
+- ~~Allow public IP to be accessible over the internet~~.
+- ~~The config that is downloaded from control plane does not have public IP. Instead it has private IP.~~ 
 - Role of node added to control plane is <empty>
 - Schedule pods on the node (Manually)
-    - Schedule a single redis pod on node. 
+    - Schedule a single redis pod on node.
     - Deploy an application with 2 application pods on the server.
     
 - Automate 

@@ -14,8 +14,8 @@ networking:
   podSubnet: "172.31.4.0/24"
 apiServer:
   certSANs:
-    - <PrivateIp>
-    - <PublicIP>
-    - <PublicDNS>
+    - ${PRIVATE_IP}
+    - ${PUBLIC_IP}
+    - ${PUBLIC_DNS}
     - "localhost"
 

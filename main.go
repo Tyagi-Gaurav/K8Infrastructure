@@ -18,6 +18,8 @@ func main() {
     // uses the current context in kubeconfig
     fmt.Println("Build Client Config")
     config, _ := clientcmd.BuildConfigFromFlags("", "/Users/gauravt/.kube/config")
+    config.Host = fmt.Sprintf("%s:%s", os.Getenv("CONTROL_PLANE_NODE"), "6443")
+    fmt.Printf("Using API Host: %s\n", config.Host)
     // creates the clientset
     fmt.Println("Create Client Set")
     clientSet, _ := kubernetes.NewForConfig(config)
@@ -39,7 +41,9 @@ func getNodes(clientSet *kubernetes.Clientset) {
     }
 
     fmt.Printf("There are %d nodes in the cluster\n", len(nodes.Items))
-
+    for i:= 0; i < len(nodes.Items); i++ {
+        fmt.Printf("Node: %s\n", nodes.Items[i].ObjectMeta.Name)
+    }
 }
 
 func getPods(clientSet *kubernetes.Clientset) {

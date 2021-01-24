@@ -77,7 +77,11 @@ resource "aws_instance" "control_plane_instance" {
   }
 
   provisioner "file" {
-    source      = "${path.module}/kubeadm_init.yml"
+    content = templatefile("${path.module}/kubeadm_init.tmpl", {
+      PRIVATE_IP = aws_instance.control_plane_instance.private_ip
+      PUBLIC_IP = aws_instance.control_plane_instance.public_ip
+      PUBLIC_DNS = aws_instance.control_plane_instance.public_dns
+    })
     destination = "/tmp/kubeadm_init.yml"
     connection {
       type = "ssh"

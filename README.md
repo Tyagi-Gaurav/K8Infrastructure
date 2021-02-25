@@ -4,6 +4,25 @@
 - Create a user in AWS
     - Get the keys and secret
     - Add a new profile in `~/.aws/credentials`
+
+Building Custom Command Line
+============================
+```go build main.go```
+
+    
+Custom Commands
+===============
+Get nodes
+```
+export CONTROL_PLANE_NODE=`terraform output control_plane_instance_ec2_public_dns`
+./main nodes
+```
+
+Get pods
+```
+export CONTROL_PLANE_NODE=`terraform output control_plane_instance_ec2_public_dns`
+./main pods
+``` 
     
 
 Helpful Commands
@@ -44,6 +63,7 @@ Once you have found the failing container, you can inspect its logs with:
     - Deploy an application with 2 application pods on the server.
     
 - Automate 
-    - Get token from Control plane to add nodes to the network.
-    - Get available nodes on the network
-    - Get pods deployed on the network    
+    ~~- Get token from Control plane to add nodes to the network.~~
+    ~~- Get available nodes on the network~~
+    - Get pods deployed on the network  
+    - Given a pod.yml, deploy on network.   
